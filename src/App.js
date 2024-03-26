@@ -10,7 +10,7 @@ function App() {
   const [interruttore, setInterruttore] = useState(false);
 
   function cambiaValore() {
-    if (pippo=== 'ciao'){
+    if (pippo === 'ciao'){
       setPippo('buongiorno');
   }else {
     setPippo('ciao');
