@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import RecipeApi from "../api/recipeApi";
+import RecipeCard from "../components/RecipeCard";
+import styled from "styled-components";
 
 const Recipes = () => {
-  const [ricette, setRicette] = useState([]);
+  const [ricette, setRicette] = useState([]); 
+
   async function prendiRicette() {
     try {
       const response = await RecipeApi.getRecipes();
@@ -17,7 +20,8 @@ const Recipes = () => {
     return () => {
       console.log("sei uscito dal componente");
     }
-  }, []);
+  },
+  []);
 
   useEffect(() => {
     if(ricette.length > 1){
@@ -26,7 +30,18 @@ const Recipes = () => {
     }
   }, [ricette])
 
-  return <div>Ricette</div>;
+  return (
+    <Contenitore>
+      <h2>Le nostre Ricette</h2>
+      <RecipeCard ricette={ricette}/> </Contenitore>
+    )
 };
+const Contenitore = styled.div`
+  background-color: white;
+  h2{
+    margin-bottom: 20px;
+    margin-left: 1.6%;
+  }
+  `
 
 export default Recipes;

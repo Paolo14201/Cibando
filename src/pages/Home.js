@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import CarouselSlider from "./CarouselSlider";
-import HeaderComponent from "./HeaderComponent";
+import CarouselSlider from "../components/CarouselSlider";
 import Recipes from "../pages/Recipes";
 
 const Home = () => {
@@ -19,7 +18,6 @@ const Home = () => {
   };
   return (
     <Contenitore>
-      <HeaderComponent />
       <CarouselSlider />
       <div className="container-titolo">
         <h2 style={bgDinamico} onClick={onEvidenziazione}>
