@@ -5,6 +5,7 @@ import HeaderComponent from "./components/HeaderComponent";
 // Pagine Importate
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
+import DetailRecipe from "./pages/DeatailRecipe";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
               <Route path="/" element={<Home />}/>
               <Route path="/home" element={<Home />}/>
               <Route path="/ricette" element={<Recipes />}/>
+              <Route path="/dettaglio/:title/:id" element={<DetailRecipe />} />
           </Routes>
       </Router>
   );

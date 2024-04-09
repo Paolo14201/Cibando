@@ -10,8 +10,8 @@ const HeaderComponent = () => {
     <header>
       <nav className="navbar navbar-expand-lg bg-red navbar-dark">
         <div className="container-fluid">
-          <Link to='/' className="navbar-brand">
-          <img src={Logo} className="icona-cibando" alt="cibando" />
+        <Link to='/' className="navbar-brand">
+          <img src={Logo} className="icona-cibando" alt="Cibando" />
             Cibando
             </Link>
           <button

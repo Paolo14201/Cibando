@@ -43,7 +43,6 @@ const Home = () => {
           out the window at the dull weather. Drops
         </p>
       </div>
-      <Recipes />≤
     </Contenitore>
   );
 };

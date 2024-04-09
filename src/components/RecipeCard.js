@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const RecipeCard = ( props ) => {    // tipizzare props con : any
 
@@ -15,7 +16,9 @@ const RecipeCard = ( props ) => {    // tipizzare props con : any
             <div className="card-body">
               <h5 className="card-title">{ricetta.title}</h5>
               <p className="card-text"> {ricetta.description}</p>
+              <Link to={`/dettaglio/${ricetta.title}/${ricetta._id}`} >
               <button className="btn btn-primary"> Viasualizza</button>
+              </Link>
               </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import RecipeCard from "../components/RecipeCard";
 import styled from "styled-components";
 
 const Recipes = () => {
-  const [ricette, setRicette] = useState([]); 
+  const [ricette, setRicette] = useState([]);
 
   async function prendiRicette() {
     try {
