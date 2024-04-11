@@ -6,14 +6,24 @@ import RecipeApi from "../api/recipeApi";
 const DetailRecipe = () => {
   const { id } = useParams();
   const [ricetta, setRicetta] = useState();
+  const [loading, setLoading] = useState(false);
+const percorsoDifficolta = "/assets/images/difficolta-"
+
 
   async function onGetRecipe() {
     try {
+      setLoading(true);
       const idNumber = Number(id);
-      const response = await RecipeApi.getRecipe(idNumber);
-      setRicetta(response);
+      const recipe = await RecipeApi.getRecipe(idNumber);
+      if (recipe) {
+        setRicetta(recipe);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   }
 
@@ -22,9 +32,9 @@ const DetailRecipe = () => {
   }, []);
 
   return (
-    ricetta && (
-      <>
-        <Contenitore>
+    <Contenitore>
+      {ricetta && (
+        <>
           <div
             className="fotoRicetta"
             style={{ backgroundImage: `url(${ricetta.image})` }}
@@ -38,13 +48,27 @@ const DetailRecipe = () => {
 
           <div className="container">
             <div className="row">
-              <div className="col-sm">Difficoltà: {ricetta.difficulty}</div>
-              <div className="col-sm-2">{ricetta.date}</div>
+              <div className="col-sm">
+                Difficoltà: {ricetta.difficulty}</div>
+                <div className="col-sm-2">{ricetta.date}</div>
+              <div className="row">
+                <img src={percorsoDifficolta + ricetta.difficulty + 'png'} alt={ricetta.title} className="difficolta"/>
+
+              </div>
             </div>
           </div>
-        </Contenitore>
-      </>
-    )
+        </>
+      )}
+      { !ricetta && (
+        <div>Spiacenti la Ricetta cercata non è piu disponibile</div>
+      )}
+      {loading && (
+        <div className="container-spinner">
+          <div className="spinner-border text-danger" role="status"></div>
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      )}
+    </Contenitore>
   );
 };
 
@@ -57,7 +81,6 @@ const Contenitore = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-
   }
 
   .titoloRicetta {
@@ -77,6 +100,17 @@ const Contenitore = styled.div`
 
   .col-sm-2 {
     padding-left: 135px;
+  }
+
+  .container-spinner {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .difficolta {
+    width: 150px;
   }
 `;
 

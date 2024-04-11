@@ -1,11 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useEffect } from "react";
 
+import Recipes from "./Recipes";
 import CarouselSlider from "../components/CarouselSlider";
-import Recipes from "../pages/Recipes";
+import RecipeApi from "../api/recipeApi";
+import RecipeCard from "../components/RecipeCard";
 
 const Home = () => {
   const [evidenziazione, setEvidenziazione] = useState(false);
+  const [ ricette, setRicette ] = useState([]);
+
   const bgDinamico = {
     backgroundColor: evidenziazione ? "yellow" : "white",
     fontSize: "50px",
@@ -13,9 +18,30 @@ const Home = () => {
     textAlign: "left",
   };
 
+  async function prendiRicette() {
+    try {
+        const response = await RecipeApi.getRecipes();
+        if(response){
+          setRicette(response.sort((a,b) => b._id - a._id).slice(0,4));
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
   const onEvidenziazione = () => {
     setEvidenziazione(!evidenziazione);
   };
+
+  useEffect(() => {
+    console.log('sei entrato nel componente')
+    prendiRicette();
+
+    return () => {
+        console.log('sei uscito dal componente');
+        setRicette([]);
+    }
+  }, [])
   return (
     <Contenitore>
       <CarouselSlider />
@@ -43,6 +69,9 @@ const Home = () => {
           out the window at the dull weather. Drops
         </p>
       </div>
+      <Recipes />
+     <h2 className="ultimeRicette">Le ultime Ricette:</h2>
+     <RecipeCard ricette={ricette}  pag='home'/>
     </Contenitore>
   );
 };
@@ -57,6 +86,9 @@ const Contenitore = styled.div`
     width: 95%;
     margin: auto;
     text-align: justify;
+  }
+  .ultimeRicette{
+    margin-left: 20px;
   }
 `;
 

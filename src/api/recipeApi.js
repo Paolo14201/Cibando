@@ -12,8 +12,8 @@ async function getRecipes() {
 
 const getRecipe = async (id) => {
   try{
-      const response = await RECIPES.find(iteam => iteam ._id === id)
-      return response;
+      const response = await RECIPES.find(iteam => iteam._id === id)
+      return (response);
     } catch (error) {
       console.log(error)
   }
