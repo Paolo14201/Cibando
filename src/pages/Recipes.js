@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import RecipeApi from "../api/recipeApi";
 import RecipeCard from "../components/RecipeCard";
 import styled from "styled-components";
+import Modal from "../components/Modal";
 
 const Recipes = () => {
+  const [open, setOpen] = useState(false);
   const [ricette, setRicette] = useState([]);
   const [titolo, setTitolo] = useState("");
 

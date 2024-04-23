@@ -7,7 +7,7 @@ const DetailRecipe = () => {
   const { id } = useParams();
   const [ricetta, setRicetta] = useState();
   const [loading, setLoading] = useState(false);
-const percorsoDifficolta = "/assets/images/difficolta-"
+  const percorsoDifficolta = "/assets/images/difficolta-"
 
 
   async function onGetRecipe() {

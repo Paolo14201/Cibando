@@ -1,15 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
+import { useUserContext } from "../context/userContext";
 
-import Recipes from "./Recipes";
 import CarouselSlider from "../components/CarouselSlider";
 import RecipeApi from "../api/recipeApi";
 import RecipeCard from "../components/RecipeCard";
 
+import Modal from "../components/Modal";
+
 const Home = () => {
+  const [open, setOpen] = useState(false);
+  const { user, registerUser } = useUserContext();
   const [evidenziazione, setEvidenziazione] = useState(false);
-  const [ ricette, setRicette ] = useState([]);
+  const [ricette, setRicette] = useState([]);
 
   const bgDinamico = {
     backgroundColor: evidenziazione ? "yellow" : "white",
@@ -20,28 +24,44 @@ const Home = () => {
 
   async function prendiRicette() {
     try {
-        const response = await RecipeApi.getRecipes();
-        if(response){
-          setRicette(response.sort((a,b) => b._id - a._id).slice(0,4));
-        }
+      const response = await RecipeApi.getRecipes();
+      if (response) {
+        setRicette(response.sort((a, b) => b._id - a._id).slice(0, 4));
+      }
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-}
+  }
 
   const onEvidenziazione = () => {
     setEvidenziazione(!evidenziazione);
   };
 
+  //gestisce apertura e chiusura della modale
+
+  const apriModale = () => {
+    setOpen(true);
+  };
+  const chiudiModale = () => {
+    registerUser(null);
+    setOpen(false);
+  };
+
   useEffect(() => {
-    console.log('sei entrato nel componente')
+    console.log("sei entrato nel componente");
     prendiRicette();
 
-    return () => {
-        console.log('sei uscito dal componente');
-        setRicette([]);
+    if (user) {
+      apriModale();
     }
-  }, [])
+
+    return () => {
+      // il return si mette sempre nel primo useEffect ed indica il onDestroy del componente
+      console.log("sei uscito dal componente");
+      setRicette([]);
+    };
+  }, []); // l'array di dipendenza vuoto [] indica l'inizzializzazione del componente ed esegue questa azione solo una volta
+
   return (
     <Contenitore>
       <CarouselSlider />
@@ -69,9 +89,9 @@ const Home = () => {
           out the window at the dull weather. Drops
         </p>
       </div>
-      <Recipes />
-     <h2 className="ultimeRicette">Le ultime Ricette:</h2>
-     <RecipeCard ricette={ricette}  pag='home'/>
+      <h2 className="ultimeRicette">Le ultime Ricette:</h2>
+      <RecipeCard ricette={ricette} pag="home" />
+      <Modal/>
     </Contenitore>
   );
 };
@@ -87,7 +107,7 @@ const Contenitore = styled.div`
     margin: auto;
     text-align: justify;
   }
-  .ultimeRicette{
+  .ultimeRicette {
     margin-left: 20px;
   }
 `;
