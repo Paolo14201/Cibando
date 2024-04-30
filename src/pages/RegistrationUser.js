@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import AccordionComponent from "../components/Accordion";
+
+
 
 const RegistrationUser = () => {
 
@@ -109,6 +112,7 @@ const [formValues, setFormValues] = useState({
     registerUser(utente)  // passiamo al metodo tutti i valori del form
     navigate('/');  // a cosa serve?
   }
+
 
   useEffect(() => {
     const isFormValid = Object.values(formErrors).every((error) => !error);
@@ -309,6 +313,7 @@ il modo per scrivere questo if in maniera semplificata è:
                             </p>
                           )}
                         </div>
+                        <div className="accordion"><AccordionComponent/></div>
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
@@ -359,6 +364,14 @@ const Contenitore = styled.div`
     color: red;
     font-weight: 700;
     font-size: small;
+  }
+
+  .accordion{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center!important;
+
+
   }
 `;
 export default RegistrationUser;

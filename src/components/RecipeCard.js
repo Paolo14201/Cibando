@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Pagination } from "@mui/material";
 
-const RecipeCard = ( props ) => {    // tipizzare props con : any
+const RecipeCard = ( props ) => {    // tipizzare props con : any sul progetto in typescript
+  const [paginaCorrente, setPaginaCorrente]= useState(1);
+
+  const ricettePerPagina = 4;
+  const indiceUltimaRicetta = paginaCorrente * ricettePerPagina ;
+  const indicePrimaRicetta = indiceUltimaRicetta - ricettePerPagina;
+  const ricetteCorrenti = props.ricette.slice(indicePrimaRicetta, indiceUltimaRicetta);
+  const numeroPagine = Math.ceil(props.ricette.length / ricettePerPagina );
+
+
+  const ricette= props.ricette
+const cambiaPagina = (evento , valore) =>{
+  setPaginaCorrente(valore);
+}
+
 
   const accorciaDescrizione = (descrizione) => {
   const lunghezzaMassima = 170;
+
 
   if(descrizione.length <= lunghezzaMassima){
     return lunghezzaMassima
@@ -22,7 +38,11 @@ function inviaTitolo(titolo){
 }
   return (
     <Contenitore>
-      {props.ricette.map((ricetta , index) => (
+      {props.pag === 'ricette' &&(
+      <div>Ricette visualizzate:  da {indicePrimaRicetta +1} a {indiceUltimaRicetta} su un totale di {ricette.length} ricette</div>
+      )}
+
+      {ricetteCorrenti.map((ricetta , index) => (
         <div className="container-card" key={index}>
           <div className="card">
             <div className="card-image" style={{backgroundImage:`url(${ricetta.image})`}} onClick={() => inviaTitolo(ricetta.title)}>
@@ -37,6 +57,30 @@ function inviaTitolo(titolo){
             </div>
         </div>
       ))}
+      <>
+{props.pag === 'ricette' && (
+
+        <div className = "paginatore">
+        <Pagination
+                  count={numeroPagine}
+                  page= {paginaCorrente}
+                  color="primary"
+                  onChange={cambiaPagina}   //  l'onChange passa due valori un event e un valore (pagina)
+        />
+
+      </div>
+)}
+<div>
+
+{/* <label for="numeroRicette">Visualizza Ricette:</label>
+
+<select name="numeroRicette" id="numeroRicette">
+<option valore="4" onChange={ricette.slice(1,4)}> 4</option>
+  <option valore="6" onChange={ricette.slice(1,6)}>6</option>
+  <option valore="8" onChange={ricette.slice(1,8)}>8</option>
+</select> */}
+</div>
+</>
     </Contenitore>
   );
 };
@@ -83,6 +127,9 @@ const Contenitore = styled.div`
       }
 
         }
+
+
+
      }
 `;
 
