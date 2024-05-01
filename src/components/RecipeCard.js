@@ -6,14 +6,15 @@ import { Pagination } from "@mui/material";
 const RecipeCard = ( props ) => {    // tipizzare props con : any sul progetto in typescript
   const [paginaCorrente, setPaginaCorrente]= useState(1);
 
-  const ricettePerPagina = 4;
+
+  const ricettePerPagina= 4;
   const indiceUltimaRicetta = paginaCorrente * ricettePerPagina ;
   const indicePrimaRicetta = indiceUltimaRicetta - ricettePerPagina;
   const ricetteCorrenti = props.ricette.slice(indicePrimaRicetta, indiceUltimaRicetta);
   const numeroPagine = Math.ceil(props.ricette.length / ricettePerPagina );
 
+const ricette= props.ricette
 
-  const ricette= props.ricette
 const cambiaPagina = (evento , valore) =>{
   setPaginaCorrente(valore);
 }
@@ -33,7 +34,7 @@ const cambiaPagina = (evento , valore) =>{
 
 function inviaTitolo(titolo){
   if(props.pag==='ricette'){
-  props.onTitoloRicevuto(titolo); //stiamo richiamando la funzione di callback nel componente padre
+  props.onTitoloRicevuto(titolo);       //stiamo richiamando la funzione di callback nel componente padre
   }
 }
   return (
