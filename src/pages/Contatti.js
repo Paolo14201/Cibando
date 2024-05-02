@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Input } from "antd";
+
+const { TextArea } = Input;
 
 const Contatti = () => {
   return (
@@ -8,7 +11,7 @@ const Contatti = () => {
         <form>
           <label>
             <h6>Nome</h6>
-            <input className="input-testo" type="text" name="nome" />
+            <Input.TextArea className="textarea" rows={4} />
           </label>
         </form>
       </div>
@@ -16,12 +19,7 @@ const Contatti = () => {
         <form>
           <label>
             <h6>E-mail</h6>
-            <input
-              className="input-testo1"
-              size="40px"
-              type="text"
-              name="email"
-            />
+            <Input.TextArea className="textarea" rows={4} />
           </label>
         </form>
       </div>
@@ -29,29 +27,28 @@ const Contatti = () => {
         <form>
           <label>
             <h6>Oggetto</h6>
-            <textarea className="input-testo2" row='2' cols='60' />
+            <Input.TextArea className="textarea" rows={4} />
           </label>
         </form>
       </div>
       <div className="form-testo">
-        <form>
+      <form>
           <label>
             <h6>Testo</h6>
-            <textarea className="input-testo3" row='25' cols='60' />
+            <Input.TextArea className="textarea" rows={4} />
           </label>
         </form>
       </div>
       <div className="d-flex">
-                          <button
-                            type="submit"
-                            data-mdb-button-init
-                            data-mdb-ripple-init
-                            className="btn btn-primary btn-lg"
-                          >
-                            Invia
-                          </button>
-                        </div>
-
+        <button
+          type="submit"
+          data-mdb-button-init
+          data-mdb-ripple-init
+          className="btn btn-primary btn-lg"
+        >
+          Invia
+        </button>
+      </div>
     </Contenitore>
   );
 };
@@ -85,7 +82,7 @@ const Contenitore = styled.div`
     margin-top: 40px;
   }
 
-  .form-testo{
+  .form-testo {
     margin-left: 200px;
     display: flex;
     margin-top: 40px;
@@ -95,11 +92,14 @@ const Contenitore = styled.div`
     clear: both;
   }
 
-  .d-flex{
+  .d-flex {
     margin-left: 200px;
     margin-top: 40px;
   }
 
+  .textarea {
+    resize: none;
+  }
 `;
 
 export default Contatti;
