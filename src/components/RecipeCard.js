@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Modal from "./Modal";
+import Modal from "./modal";
 import { Pagination } from "@mui/material";
 
 const RecipeCard = (props) => {
@@ -62,18 +62,17 @@ const RecipeCard = (props) => {
         <>
                 <div>
                 Ricette visualizzate da { indicePrimaRicetta + 1 } a { ricetteCorrenti.length < ricettePerPagina ? indicePrimaRicetta + ricetteCorrenti.length : indiceUltimaRicetta } su un totale di {ricette.length} ricette
-                <div>
-                    ricette visualizzate: 
+                   
+                   <div>
+                    Ricette visualizzate: 
+                   </div>
                     <select onChange={handleSetNumber}>
                         <option value={4}>4</option>
                         <option value={6}>6</option>
                         <option value={8}>8</option>
                     </select> 
-                </div> 
-            </div>
-            
+                </div>
         </>
- 
      }
         { ricetteCorrenti.map((ricetta, index) => (
             <div className="container-card" key={index}>
@@ -141,5 +140,6 @@ const Contenitore = styled.div`
         }
     }
 
+    
 `;
 export default RecipeCard;

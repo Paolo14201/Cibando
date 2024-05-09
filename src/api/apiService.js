@@ -1,10 +1,13 @@
-import axios from "axios"
+import axios from "axios";
+
 
 const primaChiamata = () => {
-    return axios.get('urlPrimaChiamata')
-}
-const secondaChiamata = () => {
-    return axios.get('urlSecondaChiamata')
+    return  axios.get('urlPrimaChiamata')
 }
 
-export default primaChiamata & secondaChiamata;
+
+const secondaChiamata = (test) => {
+    return  axios.get('urlsecondaChiamata')
+}
+
+export { primaChiamata, secondaChiamata};

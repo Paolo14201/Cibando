@@ -1,56 +1,64 @@
-import React, { useState, } from "react";
+import React from "react";
+
+// import per la modale
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import styled from "styled-components";
-import { useUserContext } from "../context/userContext";
 
 const Modal = (props) => {
-  const [open, setOpen] = useState(false);
-  const { user, registerUser } = useUserContext();
-
   return (
-    <Contenitore>
-      <Dialog open={props.open} onClose={props.chiudiModale}>
-        <DialogTitle>
+    <Dialog open={props.open} onClose={props.chiudiModale}>
+      <DialogTitle>
+        {props.page === "home" && (
+          <div>Grazie {props.user?.name} per esserti registrato</div>
+        )}
+        {props.page === "ricette" && <div>Ecco il nome della ricetta</div>}
+      </DialogTitle>
+
+      <DialogContent>
+        <DialogContentText>
           {props.page === "home" && (
-            <DialogContent>
-              <DialogContentText>
-                Ecco il riepilogo dei tuoi Dati
-                <ul>
-                  <li>Nome: {user?.name}</li>
-                  <li>Emanil: {user?.email}</li>
-                </ul>
-              </DialogContentText>
-            </DialogContent>
+            <div>
+              Ecco il riepilogo dei tuoi dati:
+              <ul>
+                <li>Nome: {props.user?.name}</li>
+                <li>Email: {props.user?.email}</li>
+              </ul>
+            </div>
           )}
-        </DialogTitle>
 
-        <DialogTitle>
           {props.page === "ricette" && (
-            <DialogContent>
-              <DialogContentText>
-                Ecco il riepilogo dei tuoi Dati
-                <ul>
-                  <h3> Il nome della ricetta è : {props.ricetta?.title}</h3>
-                </ul>
-              </DialogContentText>
-            </DialogContent>
+            <div>
+              <h3>{props.titolo}</h3>
+            </div>
           )}
-        </DialogTitle>
+        </DialogContentText>
+      </DialogContent>
 
-        <DialogActions>
-          <Button onClick={props.chiudiModale} autoFocus variant="contained">
-            Chiudi{" "}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      ;
-    </Contenitore>
+      <DialogActions>
+        {props.page === "home" && (
+          <div>
+            {" "}
+            <Button onClick={props.chiudiModale} autoFocus variant="contained">
+              CHIUDI
+            </Button>
+          </div>
+        )}
+
+        {props.page === "ricette" && (
+          <div>
+            {" "}
+            <Button onClick={props.chiudiModale} autoFocus variant="outlined">
+              CHIUDI
+            </Button>
+          </div>
+        )}
+      </DialogActions>
+    </Dialog>
   );
 };
-const Contenitore = styled.div``;
+
 export default Modal;

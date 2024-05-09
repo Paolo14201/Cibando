@@ -1,21 +1,20 @@
 import axios from "axios";
 
-const apiBaseUrl = '/api/users/'
+const apiBaseUrl = '/api/users/';
 
 async function insertUser(dati) {
     try {
-        const response = await axios.post(apiBaseUrl + 'signup', dati)
-        console.log('risposta:', response.data)
+        const response = await axios.post(apiBaseUrl + 'signup', dati);
+        console.log('risposta: ', response.data);
         return response;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return error;
     }
 }
 
-const userApi = {
+const UserApi = {
     insertUser: insertUser
 }
 
-export default userApi;
+export default UserApi;

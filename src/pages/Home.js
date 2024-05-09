@@ -1,105 +1,85 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserContext } from "../context/userContext";
+
+import styled from "styled-components";
 
 import CarouselSlider from "../components/CarouselSlider";
 import RecipeApi from "../api/recipeApi";
 import RecipeCard from "../components/RecipeCard";
 
-import Modal from "../components/Modal";
+import Modal from "../components/modal";
 
 const Home = () => {
-  const [open, setOpen] = useState(false);
-  const { user, registerUser } = useUserContext();
-  const [evidenziazione, setEvidenziazione] = useState(false);
-  const [ricette, setRicette] = useState([]);
+     const [open, setOpen] = useState(false);
+    const { user, registerUser } = useUserContext();
+    const [evidenziazione, setEvidenziazione] = useState(false);
+    const [ ricette, setRicette ] = useState([]);
 
   const bgDinamico = {
-    backgroundColor: evidenziazione ? "yellow" : "white",
-    fontSize: "50px",
-    cursor: "pointer",
-    textAlign: "left",
-  };
-
-  async function prendiRicette() {
-    try {
-      const response = await RecipeApi.getRecipes();
-      if (response) {
-        setRicette(response.sort((a, b) => b._id - a._id).slice(0, 4));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    backgroundColor: evidenziazione ? 'yellow' : 'white',
+    fontSize: '50px',
+    cursor: 'pointer',
+    textAlign: 'left'
   }
 
+    async function prendiRicette() {
+      try {
+          const response = await RecipeApi.getRecipes();
+          if(response){
+            setRicette(response.sort((a,b) => b._id - a._id).slice(0,4));
+          }
+      } catch (error) {
+          console.log(error)
+      }
+  }
   const onEvidenziazione = () => {
     setEvidenziazione(!evidenziazione);
-  };
-
-  //gestisce apertura e chiusura della modale
+  }
 
   const apriModale = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
+
   const chiudiModale = () => {
     registerUser(null);
     setOpen(false);
-  };
+  }
 
-  useEffect(() => {
-    console.log("sei entrato nel componente");
-    prendiRicette();
 
-    if (user) {
-      apriModale();
-    }
+useEffect(() => {
+  console.log('sei entrato nel componente')
+  prendiRicette();
 
-    return () => {
-      // il return si mette sempre nel primo useEffect ed indica il onDestroy del componente
-      console.log("sei uscito dal componente");
+  if(user){
+    apriModale();
+  }
+
+  return () => {
+      console.log('sei uscito dal componente');
       setRicette([]);
-    };
-  }, []); // l'array di dipendenza vuoto [] indica l'inizzializzazione del componente ed esegue questa azione solo una volta
+  }
+}, [])
+    return (
+      <Contenitore>
+          <CarouselSlider />
+          <div className="container-titolo">
+            <h2 style={bgDinamico} onClick={onEvidenziazione}>Benvenuti in Cibando</h2> 
+            <p className="paragrafo">Gregorio Samsa, svegliandosi una mattina da sogni agitati, si trovò trasformato, nel suo letto, in un enorme insetto immondo. Riposava sulla schiena, dura come una corazza, e sollevando un poco il capo vedeva il suo ventre arcuato, bruno e diviso in tanti segmenti ricurvi, in cima a cui la coperta da letto, vicina a scivolar giù tutta, si manteneva a fatica. Le gambe, numerose e sottili da far pietà, rispetto alla sua corporatura normale, tremolavano senza tregua in un confuso luccichio dinanzi ai suoi occhi. Cosa m’è avvenuto? pensò. Non era un sogno. La sua camera, una stanzetta di giuste proporzioni, soltanto un po’ piccola, se ne stava tranquilla fra le quattro ben note pareti. Sulla tavola, un campionario disfatto di tessuti - Samsa era commesso viaggiatore e sopra, appeso alla parete, un ritratto, ritagliato da lui - non era molto - da una rivista illustrata e messo dentro una bella cornice dorata: raffigurava una donna seduta, ma ben dritta sul busto, con un berretto e un boa di pelliccia; essa levava incontro a chi guardava un pesante manicotto, in cui scompariva tutto l’avambraccio. Lo sguardo di Gregorio si rivolse allora verso la finestra, e il cielo fosco</p>
+        </div>
+        <h2 style={{marginLeft: '20px'}}>Ecco le nostre ultime ricette:</h2>
+        <RecipeCard ricette={ricette}  pag='home'/>
+     
 
-  return (
-    <Contenitore>
-      <CarouselSlider />
-      <div className="container-titolo">
-        <h2 style={bgDinamico} onClick={onEvidenziazione}>
-          {" "}
-          Benvenuti in Cibando
-        </h2>
-        <p className="paragrafo">
-          One morning, when Gregor Samsa woke from troubled dreams, he found
-          himself transformed in his bed into a horrible vermin. He lay on his
-          armour-like back, and if he lifted his head a little he could see his
-          brown belly, slightly domed and divided by arches into stiff sections.
-          The bedding was hardly able to cover it and seemed ready to slide off
-          any moment. His many legs, pitifully thin compared with the size of
-          the rest of him, waved about helplessly as he looked. "What's happened
-          to me?" he thought. It wasn't a dream. His room, a proper human room
-          although a little too small, lay peacefully between its four familiar
-          walls. A collection of textile samples lay spread out on the table -
-          Samsa was a travelling salesman - and above it there hung a picture
-          that he had recently cut out of an illustrated magazine and housed in
-          a nice, gilded frame. It showed a lady fitted out with a fur hat and
-          fur boa who sat upright, raising a heavy fur muff that covered the
-          whole of her lower arm towards the viewer. Gregor then turned to look
-          out the window at the dull weather. Drops
-        </p>
-      </div>
-      <h2 className="ultimeRicette">Le ultime Ricette:</h2>
-      <RecipeCard ricette={ricette} pag="home" />
-      <Modal/>
+      <Modal page='home' user={user} open={open} chiudiModale={chiudiModale}/>
     </Contenitore>
-  );
-};
+  )
+}
+
 const Contenitore = styled.div`
   background-color: white;
 
   h2 {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   p {
@@ -107,9 +87,7 @@ const Contenitore = styled.div`
     margin: auto;
     text-align: justify;
   }
-  .ultimeRicette {
-    margin-left: 20px;
-  }
-`;
+
+`
 
 export default Home;

@@ -1,5 +1,5 @@
-body{
-    font-family: 'Montserrat', sans-serif !important;
+body {
+    font-family: 'Montserrat', sans-serif!important;
 }
 
 .carousel.slide {
@@ -8,23 +8,30 @@ body{
 }
 
 .carousel-caption {
-    h3{
-        font-family: "Homemade Aplle" , cursive !important;
+    h3 {
+        font-family: "Homemade Apple", cursive;
         font-size: 40px;
-        text-shadow:  black 2px 3px 3px;
+        text-shadow: black 2px 3px 3px;
     }
 }
 
-.carosule-control-prev-icon , .carosule-control-next-icon {
-    width:  4rem!important;
-    height:  4rem!important;
-    opacity:  0.5!important;
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    width: 4rem!important;
+    height: 4rem!important;
+    opacity: 0.5!important;
 }
 
-.paginatore{
+.btn-primary {
+    background-color: #8e210b!important;
+    color: white;
+    font-weight: bold!important;
+    border: none!important;
+    padding: 8px 25px!important;
+    margin: auto!important;
+}
+
+.paginatore {
     clear: both;
     display: flex;
     justify-content: center!important;
-    margin-bottom: 10px;
-
 }

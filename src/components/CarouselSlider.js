@@ -16,22 +16,21 @@ const CarouselSlider = () => {
         {
           id: 3,
           image: './assets/images/imageBg-3.jpg',
-          label: 'Tiramisù Classico'
+          label: 'Tiramisù classico'
         }
       ]
     return (
         <Carousel>
-        {imagesCarousel.map((item , index) =>(
-                <Carousel.Item  key={index}>
-                <img className='d-block w-100' src= {item.image} alt={item.label} />
-                <Carousel.Caption>
-                  <h3>{item.label}</h3>
-                </Carousel.Caption>
-              </Carousel.Item>
+        { imagesCarousel.map((item, index) => (
+           <Carousel.Item key={index}>
+             <img className="d-block w-100" src={item.image} alt={item.label} />
+             <Carousel.Caption>
+               <h3>{item.label}</h3>
+             </Carousel.Caption>
+         </Carousel.Item>
         ))}
-            </Carousel>
+       </Carousel>
     )
 }
-
 
 export default CarouselSlider;

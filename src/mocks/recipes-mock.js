@@ -1,3 +1,4 @@
+
 const RECIPES = [
     {
       _id: 1,
@@ -126,5 +127,5 @@ const RECIPES = [
       published: true
     }
   ]
-
+  
   export default RECIPES;
