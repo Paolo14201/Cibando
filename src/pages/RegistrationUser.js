@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import userApi from "../api/userApi";
 import { useUserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -6,10 +7,22 @@ import { useEffect } from "react";
 import { Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import AccordionComponent from "../components/Accordion";
+import { Alert, Snackbar } from "@mui/material";
 
 
 
 const RegistrationUser = () => {
+  const [severity, setSeverity] = useState("");
+  const [message, setMessage] = useState("");
+  const vertical = "bottom";
+  const horizontal = "right";
+  const [open, setOpen] = useState(false)
+
+  
+  const closeToast = () => {
+    setOpen(false);
+  }
+
 
 const { registerUser } = useUserContext(); // destrutturizzazione dell'oggetto che mi manda userContext (sto usando solo registerUser e non uso user)
 
@@ -106,11 +119,33 @@ const [formValues, setFormValues] = useState({
     }
   };
 
-  function onSubmitForm(event) {
+  async function onSubmitForm(event) {
     event.preventDefault();
     const utente = {name: formValues.name , email: formValues.email}
-    registerUser(utente)  // passiamo al metodo tutti i valori del form
-    navigate('/');  // a cosa serve?
+
+    try{
+      const dati = {name: formValues.name , email: formValues.email, password: formValues.password}
+      const response = await userApi.insertUser(dati);
+      if(response && response.status === 200){
+        setSeverity ('successo');
+        setMessage('Utente registrato con successo');
+        setOpen(true);
+        registerUser(utente)  // passiamo al metodo tutti i valori del form 
+
+        setTimeout(() => {
+
+          navigate('/');  // a cosa serve?
+        }, 4000)
+
+      }else {
+        setSeverity ('successo')
+        setMessage('Errore registrazione utente')
+        setOpen(true)
+      }
+    }catch (error){
+      console.log(error)
+    }
+
   }
 
 
@@ -343,6 +378,10 @@ il modo per scrivere questo if in maniera semplificata è:
           </div>
         </div>
       </section>
+      <Snackbar open={open} autoHideDuration={4000} onClose={closeToast} anchorOrigin={{vertical, horizontal}}>
+      <Alert onClose={closeToast} severity={severity} variant="filled" >{message}</Alert>
+
+      </Snackbar>
     </Contenitore>
   );
 };
