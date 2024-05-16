@@ -4,6 +4,8 @@ import { UserProvider } from "./context/userContext";
 import Header from "./components/Header";
 import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoutes } from "./auth/ProtectedRoutes";
+import { ProtectedRoutesUser } from "./auth/ProtectedRouteUser";
+import Profile from "./pages/Profile";
 
 // Pagine
 import Home from "./pages/Home";
@@ -32,7 +34,14 @@ function App() {
                   <NewRecipe />
               }
             />
+                      <Route path= '/profilo' element ={
+            <ProtectedRoutesUser>
+              <Profile/>
+            </ProtectedRoutesUser>
+          }>
+          </Route>
           </Routes>
+
         </AuthProvider>
       </Router>
     </UserProvider>

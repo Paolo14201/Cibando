@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Modal from "./modal";
 import { Pagination } from "@mui/material";
+import DOMPurify from 'dompurify'
 
 const RecipeCard = (props) => {
     const [open, setOpen] = useState(false);
@@ -46,7 +47,7 @@ const RecipeCard = (props) => {
     const apriModale = () => {
         setOpen(true)
       }
-    
+
       const chiudiModale = () => {
         setOpen(false);
       }
@@ -58,19 +59,19 @@ const RecipeCard = (props) => {
       }, [indicePrimaRicetta])
   return (
     <Contenitore>
-     {props.pag === 'ricette' && 
+     {props.pag === 'ricette' &&
         <>
                 <div>
                 Ricette visualizzate da { indicePrimaRicetta + 1 } a { ricetteCorrenti.length < ricettePerPagina ? indicePrimaRicetta + ricetteCorrenti.length : indiceUltimaRicetta } su un totale di {ricette.length} ricette
-                   
+
                    <div>
-                    Ricette visualizzate: 
+                    Ricette visualizzate:
                    </div>
                     <select onChange={handleSetNumber}>
                         <option value={4}>4</option>
                         <option value={6}>6</option>
                         <option value={8}>8</option>
-                    </select> 
+                    </select>
                 </div>
         </>
      }
@@ -82,16 +83,16 @@ const RecipeCard = (props) => {
                     <div className="card-body">
                         <h5 className="card-title">{ricetta.title}</h5>
                         <p className="card-text">
-                            {ricetta.description.slice(0, accorciaDescrizione(ricetta.description))} ...
+                            <span  dangerouslySetInnerHTML={{__html : DOMPurify.sanitize(ricetta.description.slice(0, accorciaDescrizione(ricetta.description)) + '...')}} /> 
                         </p>
                         <Link to={`/dettaglio/${ricetta.title}/${ricetta._id}`}>
-                            <button className="btn btn-primary">Visualizza</button> 
+                            <button className="btn btn-primary">Visualizza</button>
                         </Link>
                     </div>
                 </div>
             </div>
         ))}
-        {props.pag === 'ricette' && 
+        {props.pag === 'ricette' &&
             (
                 <div className="paginatore">
                 <Pagination
@@ -140,6 +141,5 @@ const Contenitore = styled.div`
         }
     }
 
-    
 `;
 export default RecipeCard;

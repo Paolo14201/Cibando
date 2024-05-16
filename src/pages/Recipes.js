@@ -73,7 +73,7 @@ useEffect(() => {
                 )}
             </div>
             
-            <RecipeCard ricette={ricette} nome='dan' frase='ciao' onTitoloRicevuto={titoloDalFiglio} pag='ricette'/>
+            <RecipeCard  ricette={ricette} nome='dan' frase='ciao' onTitoloRicevuto={titoloDalFiglio} pag='ricette'/>
 
             <Snackbar open={open} autoHideDuration={4000} onClose={closeToast} anchorOrigin={{ vertical, horizontal}}>
                 <Alert onClose={closeToast} severity={severity} variant="filled">
